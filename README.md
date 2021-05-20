@@ -1,7 +1,7 @@
 # 南京大学LUG笑话精选集
 
 创刊于2021年4月23日夜。
-原地址在[这里](https://git.nju.edu.cn/nju-lug/lug-joke-collection)（需南京大学校园网访问），使用Github Action以12小时为间隔进行同步。
+原地址在[这里](https://git.nju.edu.cn/nju-lug/lug-joke-collection)，使用Github Action以12小时为间隔进行同步。
 
 ## 收什么
 
