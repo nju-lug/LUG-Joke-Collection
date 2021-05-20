@@ -1,0 +1,43 @@
+name: sync_issues
+on: 
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */12 * * *'
+
+jobs: 
+  sync-issues-from-nju-git: 
+    name: sync issues from nju git
+    runs-on: ubuntu-latest
+    steps: 
+      - name: checkout repo
+        uses: actions/checkout@v2
+      - name: set up python
+        uses: actions/setup-python@v2
+        with: 
+          python-version: 3.8
+      - name: configure pip
+        uses: actions/cache@v2
+        with: 
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: install python dependency
+        run: |
+          python -m pip install -r requirements.txt
+      - name: run sync.py
+        env: 
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |-
+          python sync.py "False"
+      - name: commit and push
+        run: |-
+          git diff
+          git config --global user.email "typoverflow@outlook.com"
+          git config --global user.name "typoverflow-bot"
+          git add -A
+          git commit -m "Bot: upload images" || exit 0
+          git push
+      - name: print message
+        run: |
+          echo "successful."
