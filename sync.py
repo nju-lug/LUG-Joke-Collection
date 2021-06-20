@@ -104,7 +104,7 @@ def post_issues(post_url, repo_url, type, new_issues, force=False, headers=None)
                     new_issue = new_issue.to(type, repo_url)
                     new_issue.convert_url()
                     patch_dict = {key:value for (key, value) in new_issue.__dict__.items() if key in ("title", "body", "labels")}
-                    r = session.patch(post_url+"/{}".format(old_issue.raw_data["number"]), json.dumps(patch), headers=headers)
+                    r = session.patch(post_url+"/{}".format(old_issue.raw_data["number"]), json.dumps(patch_dict), headers=headers)
                     assert r.status_code == 200
                 flag = False
                 break
